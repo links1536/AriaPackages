@@ -15,7 +15,16 @@ namespace Aria.Common
 	{
 		public static T Instance { get; private set; }
 
-		static readonly protected ILogger m_Logger = AriaLogger<T>.Get();
+		static ILogger _Logger;
+		static protected ILogger m_Logger
+		{
+			get
+			{
+				if (_Logger == null)
+					_Logger = AriaLogger<T>.Get();
+				return _Logger;
+			}
+		}
 
 		protected static void SetInstance(T instance)
 		{

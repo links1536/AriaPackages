@@ -1,4 +1,5 @@
-﻿using Aria.Logging.Formatter;
+﻿using System;
+using Aria.Logging.Formatter;
 using Microsoft.Extensions.Logging;
 using ZLogger;
 using ZLogger.Unity;
@@ -32,7 +33,7 @@ namespace Aria.Logging
 
 		static string LogDirectory = "./";
 
-		[UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.AfterAssembliesLoaded)]
+		[UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
 #if UNITY_EDITOR
 		[UnityEditor.InitializeOnLoadMethod]
 #endif
@@ -70,6 +71,7 @@ namespace Aria.Logging
 				});
 			});
 			m_Logger = m_LoggerFactory.CreateLogger(string.Empty);
+			UnityEngine.Debug.Log($"LoggerFactoryを作成");
 		}
 
 		public static ILogger CreateLogger<T>()
