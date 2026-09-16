@@ -6,7 +6,7 @@
 float GetMiePhase(float eyeCos, float eyeCos2, half sunSize)
 {
 	float temp = 1.0 + MIE_G2 - 2.0 * MIE_G * eyeCos;
-	temp = pow(temp, pow(sunSize, 0.65) * 10);
+	temp = pow(temp, pow(abs(sunSize), 0.65) * 10);
 	temp = max(temp, 1.0e-4);
 	temp = 1.5 * ((1.0 - MIE_G2) / (2.0 + MIE_G2)) * (1.0 + eyeCos2) / temp;
 	return temp;
