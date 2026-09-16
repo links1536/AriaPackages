@@ -44,10 +44,10 @@ namespace Aria.Common.IO
 		[DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		static extern bool GetDiskFreeSpaceEx(
-			string lpDirectoryName,					// ドライブのルートパス (例: "C:\\")
-			out ulong lpFreeBytesAvailable,			// 呼び出し側が利用できるバイト数
-			out ulong lpTotalNumberOfBytes,			// ドライブの総バイト数
-			out ulong lpTotalNumberOfFreeBytes		// ドライブの空きバイト数
+			string lpDirectoryName,                 // ドライブのルートパス (例: "C:\\")
+			out ulong lpFreeBytesAvailable,         // 呼び出し側が利用できるバイト数
+			out ulong lpTotalNumberOfBytes,         // ドライブの総バイト数
+			out ulong lpTotalNumberOfFreeBytes      // ドライブの空きバイト数
 		);
 #endif
 
@@ -65,7 +65,8 @@ namespace Aria.Common.IO
 
 		public static bool TryGetDiskFreeSpace(string directoryPath, out ulong availableBytes, out ulong totalBytes, out ulong freeBytes)
 		{
-			try {
+			try
+			{
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 				return GetDiskFreeSpaceEx(directoryPath, out availableBytes, out totalBytes, out freeBytes);
 #elif UNITY_ANDROID
@@ -87,7 +88,8 @@ namespace Aria.Common.IO
 				return true;
 #endif
 			}
-			catch (Exception e) {
+			catch (Exception e)
+			{
 				LoggerHandler.DefaultLogger.ZLogError(e, $"[{nameof(TryGetDiskFreeSpace)}] 容量取得に失敗しました: {directoryPath}");
 			}
 			availableBytes = 0;

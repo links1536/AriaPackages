@@ -1,4 +1,4 @@
-class Dummy
+﻿class Dummy
 {
-	
+
 }

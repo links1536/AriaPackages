@@ -32,7 +32,7 @@ namespace Aria.Common.IO
 			if (bits > Giga) return string.Format($"{{0:0.{string.Concat('#', digit)}}}Gbps", (double)bits / Giga);
 			if (bits > Mega) return string.Format($"{{0:0.{string.Concat('#', digit)}}}Mbps", (double)bits / Mega);
 			if (bits > Kiro) return string.Format($"{{0:0.{string.Concat('#', digit)}}}Kbps", (double)bits / Kiro);
-			 return $"{bits}bps";
+			return $"{bits}bps";
 		}
 	}
 }

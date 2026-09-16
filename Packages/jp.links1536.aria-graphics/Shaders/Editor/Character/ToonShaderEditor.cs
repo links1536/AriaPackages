@@ -175,7 +175,7 @@ namespace AriaEditor.Shaders.Characters
 				{
 					if (ToggleFlagValueField("Lighting", m_EnableLighting))
 					{
-						if(ToggleKeywordField("Face Mode", "FACELIGHTING_ON"))
+						if (ToggleKeywordField("Face Mode", "FACELIGHTING_ON"))
 						{
 							TextureField(m_FaceShadowMaskTexture);
 						}

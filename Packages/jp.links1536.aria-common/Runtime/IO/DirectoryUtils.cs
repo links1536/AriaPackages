@@ -29,7 +29,8 @@ namespace Aria.Common.IO
 
 		public static async Task CopyDirectoryAsync(string source, string destination, CancellationToken cancellationToken)
 		{
-			if (!Directory.Exists(source)) {
+			if (!Directory.Exists(source))
+			{
 				LoggerHandler.DefaultLogger.ZLogError($"{nameof(CopyDirectoryAsync)}: Not found {source}");
 				return;
 			}
@@ -37,7 +38,8 @@ namespace Aria.Common.IO
 			SafeCreateDirectory(destination);
 			var files = Directory.EnumerateFiles(source, "*", SearchOption.AllDirectories);
 			var taskList = new List<Task>();
-			foreach (var sourcePath in files) {
+			foreach (var sourcePath in files)
+			{
 				var task = Task.Factory.StartNew(() =>
 				{
 					cancellationToken.ThrowIfCancellationRequested();

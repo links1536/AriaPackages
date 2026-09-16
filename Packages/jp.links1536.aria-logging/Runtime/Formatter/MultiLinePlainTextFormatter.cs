@@ -10,14 +10,14 @@ namespace Aria.Logging.Formatter
 {
 	class MultiLinePlainTextFormatter : IZLoggerFormatter
 	{
-		static readonly byte[] LogLevelTrace	= EncodeLogLevelTag(LogLevel.Trace);
-		static readonly byte[] LogLevelDebug	= EncodeLogLevelTag(LogLevel.Debug);
-		static readonly byte[] LogLevelInfo		= EncodeLogLevelTag(LogLevel.Information);
-		static readonly byte[] LogLevelWarning	= EncodeLogLevelTag(LogLevel.Warning);
-		static readonly byte[] LogLevelError	= EncodeLogLevelTag(LogLevel.Error);
-		static readonly byte[] LogLevelFatal	= EncodeLogLevelTag(LogLevel.Critical);
-		static readonly byte[] LogLevelNone		= EncodeLogLevelTag(LogLevel.None);
-		static readonly byte[] NewLine			= Encoding.UTF8.GetBytes(Environment.NewLine);
+		static readonly byte[] LogLevelTrace = EncodeLogLevelTag(LogLevel.Trace);
+		static readonly byte[] LogLevelDebug = EncodeLogLevelTag(LogLevel.Debug);
+		static readonly byte[] LogLevelInfo = EncodeLogLevelTag(LogLevel.Information);
+		static readonly byte[] LogLevelWarning = EncodeLogLevelTag(LogLevel.Warning);
+		static readonly byte[] LogLevelError = EncodeLogLevelTag(LogLevel.Error);
+		static readonly byte[] LogLevelFatal = EncodeLogLevelTag(LogLevel.Critical);
+		static readonly byte[] LogLevelNone = EncodeLogLevelTag(LogLevel.None);
+		static readonly byte[] NewLine = Encoding.UTF8.GetBytes(Environment.NewLine);
 
 		static byte[] EncodeLogLevelTag(LogLevel logLevel)
 		{
@@ -31,7 +31,7 @@ namespace Aria.Logging.Formatter
 				LogLevel.Critical => "Fatal",
 				_ => string.Empty,
 			});
-			return Encoding.UTF8.GetBytes($"[ {logLevelTag, -7} ]");
+			return Encoding.UTF8.GetBytes($"[ {logLevelTag,-7} ]");
 		}
 
 		static ReadOnlySpan<byte> GetLogLevelSpan(LogLevel logLevel)
