@@ -130,6 +130,43 @@ namespace Aria.Rendering.Universal.PostProcessing.Distortion
 					Blitter.BlitTexture(context.cmd, passData.SourceColor, Vector2.one, passData.Material, 0);
 				});
 			}
+
+
+			var extraInputsData = frameData.GetOrCreate<ExtraInputsResourceData>();
+			if (extraInputsData == null)
+				return;
+
+			// キャラクターマスクも歪ませる必要がある
+			// TODO: シーンと合わせて1パスでまとめて処理する形にする
+			if (extraInputsData.CharacterMask.IsValid())
+			{
+				using (var builder = renderGraph.AddRasterRenderPass<DistortionApplyPassData>("Distortion Apply (CharacterMask)", out var passData))
+				{
+					var source = extraInputsData.CharacterMask;
+
+					var desc = source.GetDescriptor(renderGraph);
+					desc.name += " After Distortion";
+					var destination = renderGraph.CreateTexture(desc);
+					extraInputsData.CharacterMask = destination;
+
+					passData.SourceColor = source;
+					passData.DistortionPower = distortionVolume.Intensity;
+					passData.Material = ariaProcessResourceData.DistortionMaterial;
+
+					builder.SetRenderAttachment(destination, 0, AccessFlags.Write);
+					builder.UseTexture(passData.SourceColor, AccessFlags.Read);
+
+					builder.AllowPassCulling(false);
+					builder.AllowGlobalStateModification(true);
+					builder.SetRenderFunc<DistortionApplyPassData>(static (passData, context) =>
+					{
+						context.cmd.SetGlobalFloat(DistortionPowerId, passData.DistortionPower);
+						Blitter.BlitTexture(context.cmd, passData.SourceColor, Vector2.one, passData.Material, 0);
+					});
+					builder.SetGlobalTextureAfterPass(extraInputsData.CharacterMask, CharacterMask.CharacterMaskPass.CharacterMaskTextureId);
+				}
+			}
+
 		}
 	}
 }
