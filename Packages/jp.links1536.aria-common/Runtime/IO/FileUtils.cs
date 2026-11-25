@@ -16,12 +16,8 @@ namespace Aria.Common.IO
 			string temporaryPath = Path.Combine(directory, $".{Path.GetFileName(fullPath)}.{Guid.NewGuid():N}.tmp");
 			try
 			{
-				byte[] bytes = new UTF8Encoding(false).GetBytes(contents);
-				using (var stream = new FileStream(temporaryPath, FileMode.CreateNew, FileAccess.Write, FileShare.None, 4096, true))
-				{
-					await stream.WriteAsync(bytes, 0, bytes.Length, cancellationToken).ConfigureAwait(false);
-					await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
-				}
+				var encoding = new UTF8Encoding(false);
+				await File.WriteAllTextAsync(temporaryPath, contents, encoding, cancellationToken).ConfigureAwait(false);
 				cancellationToken.ThrowIfCancellationRequested();
 				if (File.Exists(fullPath))
 					File.Replace(temporaryPath, fullPath, null);
