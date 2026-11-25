@@ -32,6 +32,11 @@ namespace Aria.AssetManagement
 		public int SaltSize = 16;
 		public byte[] CatalogSalt;
 
+#if UNITY_EDITOR
+		[Header("エディタ実行設定")]
+		public bool LocalLoadMode;
+#endif
+
 		public void OnBeforeSerialize()
 		{
 		}

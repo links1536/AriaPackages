@@ -45,23 +45,26 @@ namespace Aria.AssetManagement
 			// カタログをDLしてDictionaryにまとめ直す
 			string path = GetStreamingAssetsPath(AssetBundleCatalog.CatalogPath + instance.Extension);
 			m_Catalog = await AssetBundleCatalog.DownloadAsync(path, instance.CatalogPassword, instance.CatalogSalt, downloadingEvent, cancellationToken);
-			if (m_Catalog == null)
+			if (m_Catalog == null && !instance.LocalLoadMode)
 			{
 				m_Logger.ZLogError($"{nameof(AssetBundleCatalog)}を取得できませんでした");
 				return false;
 			}
 
+			var bundles = m_Catalog?.Bundles ?? System.Array.Empty<BundleInfo>();
+			var dependencies = m_Catalog?.Dependencies ?? System.Array.Empty<DependencyInfo>();
+
 			// Traceで出力
 			m_Logger.ZLogTrace($"{m_Catalog}");
 
 			// AssetBundleリスト
-			m_BundleInfos = new Dictionary<string, BundleInfo>(m_Catalog.Bundles.Length);
-			foreach (var bundleInfo in m_Catalog.Bundles)
+			m_BundleInfos = new Dictionary<string, BundleInfo>(bundles.Length);
+			foreach (var bundleInfo in bundles)
 				m_BundleInfos[bundleInfo.BundleName] = bundleInfo;
 
 			// 依存ファイルをまとめる
-			m_Dependencies = new Dictionary<string, HashSet<string>>(m_Catalog.Dependencies.Length);
-			foreach (var dependency in m_Catalog.Dependencies)
+			m_Dependencies = new Dictionary<string, HashSet<string>>(dependencies.Length);
+			foreach (var dependency in dependencies)
 			{
 				if (!m_Dependencies.TryGetValue(dependency.BundleName, out var dependenceis))
 				{
@@ -77,7 +80,7 @@ namespace Aria.AssetManagement
 
 			m_LoadingBundles = new HashSet<string>();
 			m_UnloadingBundles = new HashSet<string>();
-			m_LoadedBundles = new Dictionary<string, BundleHandle>(m_Catalog.Bundles.Length);
+			m_LoadedBundles = new Dictionary<string, BundleHandle>(bundles.Length);
 
 			return true;
 		}

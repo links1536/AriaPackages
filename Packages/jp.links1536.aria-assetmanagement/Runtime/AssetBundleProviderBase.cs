@@ -21,7 +21,7 @@ namespace Aria.AssetManagement
 			public AssetBundle AssetBundle;
 		}
 
-		protected AssetBundleCatalog m_Catalog;
+		protected AssetBundleCatalog? m_Catalog;
 
 		protected Dictionary<string, BundleInfo> m_BundleInfos;
 		protected Dictionary<string, HashSet<string>> m_Dependencies;
