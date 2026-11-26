@@ -283,6 +283,18 @@
         "com.cysharp.zlogger": "2.5.10"
       }
     },
+    "jp.links1536.aria-ui": {
+      "version": "file:jp.links1536.aria-ui",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.cysharp.unitask": "2.5.11",
+        "com.cysharp.r3": "1.3.1",
+        "com.unity.ugui": "2.0.0",
+        "com.unity.inputsystem": "1.19.0",
+        "jp.links1536.aria-common": "1.0.0"
+      }
+    },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
       "depth": 0,
